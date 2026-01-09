@@ -36,12 +36,12 @@ app.get("/health", (req, res) => {
 
 app.use("/auth", authRoutes);
 
-app.get("/prot", authWare, (req, res) => {
-    res.status(200).json({
-        message: "This is a protected route",
-        user: req.user,
-    });
-});
+// app.get("/prot", authWare, (req, res) => {
+//     res.status(200).json({
+//         message: "This is a protected route",
+//         user: req.user,
+//     });
+// });
 
 app.use((req, res, next) => {
     console.log(`Unknown endpoint ${req.method} ${req.url}`);
