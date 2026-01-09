@@ -230,6 +230,13 @@ async function verifyIndex(){
         ON comments(user_id);`
     );
     console.log("Verified index on comments.user_id");
+
+    //timestamp index on audit_logs
+    await appPool.query(
+        `CREATE INDEX IF NOT EXISTS idx_audit_logs_timestamp
+        ON audit_logs(timestamp);`
+    );
+    console.log("Verified index on audit_logs.timestamp");
 }
 
 module.exports = verifySchemaExistence;
