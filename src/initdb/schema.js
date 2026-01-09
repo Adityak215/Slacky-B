@@ -63,6 +63,7 @@ async function createSchema(tableName) {
                     id SERIAL PRIMARY KEY,
                     name VARCHAR(25) NOT NULL,
                     email VARCHAR(255) UNIQUE NOT NULL,
+                    hash VARCHAR(255) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )`);
                 break;
@@ -71,7 +72,6 @@ async function createSchema(tableName) {
                 CREATE TABLE IF NOT EXISTS workspaces (
                     id SERIAL PRIMARY KEY,
                     name VARCHAR(50) NOT NULL,
-                    hash VARCHAR(255) NOT NULL,
                     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )`);
                 break;

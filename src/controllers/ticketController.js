@@ -40,7 +40,7 @@ async function createTicket(req, res, next) {
             [ticketId, userId]);
 
         await client.query(`
-            INSERT INTO audit_logs (user_id, action, entity_type, entity_id)
+            INSERT INTO audit_logs (performed_by, action, entity_type, entity_id)
             VALUES ($1, 'create', 'ticket', $2)
             `, [userId, ticketId]);
 
@@ -160,7 +160,7 @@ async function deleteTicket(req, res, next) {
             `, [ticketId]);
         
         await client.query(`
-            INSERT INTO audit_logs (user_id, action, entity_type, entity_id)
+            INSERT INTO audit_logs (performed_by, action, entity_type, entity_id)
             VALUES ($1, 'delete', 'ticket', $2)
             `, [userId, ticketId]);
         

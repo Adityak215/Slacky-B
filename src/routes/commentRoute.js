@@ -6,22 +6,24 @@ const commentController = require("../controllers/commentController");
 const router = express.Router();
 
 router.post(
-    "/tickets/:ticketId/comments",
+    "/projects/:projectId/tickets/:ticketId/comments",
     authWare,
     authorizeWorkspace(['admin', 'member']),
     commentController.createComment
 );
 
 router.delete(
-    "/comments/:commentId",
+    "/projects/:projectId/tickets/:ticketId/comments/:commentId",
     authWare,
     authorizeWorkspace(['admin', 'member']),
     commentController.deleteComment
 );
 
 router.get(
-    "/tickets/:ticketId/comments",
+    "/projects/:projectId/tickets/:ticketId/comments",
     authWare,
     authorizeWorkspace(['admin', 'member', 'viewer']),
     commentController.listComments
 );
+
+module.exports = router;

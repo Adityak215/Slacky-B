@@ -34,7 +34,7 @@ async function createComment(req, res, next) {
         );
 
         await client.query(`
-            INSERT INTO audit_logs (user_id, action, entity_type, entity_id)
+            INSERT INTO audit_logs (performed_by, action, entity_type, entity_id)
             VALUES ($1, 'create', 'comment', $2)
             `, [userId, result.rows[0].id]);
 
@@ -79,7 +79,7 @@ async function deleteComment(req, res, next) {
         );
 
         await client.query(`
-            INSERT INTO audit_logs (user_id, action, entity_type, entity_id)
+            INSERT INTO audit_logs (performed_by, action, entity_type, entity_id)
             VALUES ($1, 'delete', 'comment', $2)
             `, [userId, commentId]);
 

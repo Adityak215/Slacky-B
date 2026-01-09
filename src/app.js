@@ -1,6 +1,9 @@
 const express = require("express");
-const authWare = require("./middleware/auth");
 const authRoutes = require("./routes/authRoute");
+
+const projectRoutes = require("./routes/projectRoute");
+const ticketRoutes = require("./routes/ticketRoute");
+const commentRoutes = require("./routes/commentRoute");
 const { globalLimiter, authLimiter } = require("./middleware/rateLimit");
 const helmet = require("helmet");
 const cors = require("cors");
@@ -35,8 +38,11 @@ app.get("/health", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
+app.use("/workspaces", projectRoutes);
+app.use("/", ticketRoutes);
+app.use("/", commentRoutes);
 
-// app.get("/prot", authWare, (req, res) => {
+// app.get("/protec", authWare, (req, res) => {
 //     res.status(200).json({
 //         message: "This is a protected route",
 //         user: req.user,

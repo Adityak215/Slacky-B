@@ -13,14 +13,14 @@ router.post(
 );
 
 router.patch(
-    "/tickets/:ticketId/status",
+    "/projects/:projectId/tickets/:ticketId/status",
     authWare,
     authorizeWorkspace(['admin', 'member']),
     ticketController.updateTicketStatus
 );
 
 router.delete(
-    "/tickets/:ticketId",
+    "/projects/:projectId/tickets/:ticketId",
     authWare,
     authorizeWorkspace(['admin', 'member']),
     ticketController.deleteTicket
@@ -32,3 +32,5 @@ router.get(
     authorizeWorkspace(['admin', 'member', 'viewer']),
     ticketController.listTickets
 );
+
+module.exports = router;

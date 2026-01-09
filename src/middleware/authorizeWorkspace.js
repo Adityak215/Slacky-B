@@ -1,19 +1,33 @@
 const appPool = require("../db/appPool");
 
-async function authorizeWorkspace(allowedRoles) {
+function authorizeWorkspace(allowedRoles) {
     return async (req, res, next) => {
         try {
             const userId = req.user.id;
-            const workspaceId = req.params.workspaceId;
-            
-            if(!workspaceId) {
-                return res.status(400).json({
-                    error: "Workspace ID is required",
-                });
+            let workspaceId = req.params.workspaceId;
+
+            if (!workspaceId) {
+                // Try to get workspaceId from projectId
+                if (req.params.projectId) {
+                    const projectResult = await appPool.query(
+                        `SELECT workspace_id FROM projects WHERE id = $1`,
+                        [req.params.projectId]
+                    );
+                    if (projectResult.rows.length === 0) {
+                        return res.status(404).json({
+                            error: "Project not found",
+                        });
+                    }
+                    workspaceId = projectResult.rows[0].workspace_id;
+                } else {
+                    return res.status(400).json({
+                        error: "Workspace ID or Project ID required",
+                    });
+                }
             }
 
             const result = await appPool.query(
-                `SELECT role FROM workspace_members 
+                `SELECT role FROM user_workspaces 
                  WHERE user_id = $1 AND workspace_id = $2 AND
                  deleted_at IS NULL`,
                 [userId, workspaceId]
